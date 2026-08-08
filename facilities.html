@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facilities - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="landing-header">
+        <div class="nav-container">
+            <div class="logo">
+                <i data-lucide="building-2"></i> HostelHub
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="our-rooms.html">Rooms</a>
+                <a href="facilities.html">Facilities</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="static-page-header">
+        <h1>Premium Facilities</h1>
+        <p>Everything you need for a comfortable and productive stay.</p>
+    </div>
+
+    <!-- Content -->
+    <div class="static-content">
+        <div class="features-grid" style="margin-top:0;">
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="wifi"></i></div>
+                <h3>High-Speed Internet</h3>
+                <p>Enterprise-grade Wi-Fi available throughout the premises, perfect for remote work or uninterrupted studying.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="coffee"></i></div>
+                <h3>Cafeteria & Dining</h3>
+                <p>Our in-house cafeteria offers a variety of healthy, hygienic, and affordable meals prepared daily.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="book-open"></i></div>
+                <h3>Quiet Study Rooms</h3>
+                <p>Dedicated soundproof study areas equipped with comfortable seating and ample charging ports.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="tv"></i></div>
+                <h3>Entertainment Lounge</h3>
+                <p>Unwind in our common room featuring smart TVs, gaming consoles, and comfortable lounge seating.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="shirt"></i></div>
+                <h3>Laundry Service</h3>
+                <p>On-site coin-operated washers and dryers, plus optional premium wash-and-fold services.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="dumbbell"></i></div>
+                <h3>Fitness Center</h3>
+                <p>Stay healthy with our fully equipped gym, accessible 24/7 for all residents.</p>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 3rem; text-align:center;">Security & Maintenance</h2>
+        <p style="text-align:center;">Your safety and comfort are our top priorities. HostelHub is equipped with 24/7 CCTV cameras, security guards at all entry points, and biometric access controls. Our maintenance team is on standby to resolve any issues within hours.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="logo" style="color:white; margin-bottom:1rem;">
+                    <i data-lucide="building-2"></i> HostelHub
+                </div>
+                <p style="color:#94A3B8;">Your comfortable stay, managed simply. We provide the best accommodation experiences.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="our-rooms.html">Rooms</a>
+                <a href="about.html">About</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <a href="#"><i data-lucide="map-pin" style="width:16px; display:inline-block; margin-right:5px;"></i> University Of Gujrat</a>
+                <a href="#"><i data-lucide="phone" style="width:16px; display:inline-block; margin-right:5px;"></i> +923348910673</a>
+                <a href="#"><i data-lucide="mail" style="width:16px; display:inline-block; margin-right:5px;"></i> hamzazahooryts@gmail.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 HostelHub Management System. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        lucide.createIcons();
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

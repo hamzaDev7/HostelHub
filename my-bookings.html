@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="building-2" style="color:var(--primary); width:24px; height:24px;"></i>
+                <h2>HostelHub</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav"></nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
+                    <div class="user-dropdown">
+                        <div class="user-info" id="user-dropdown-btn">
+                            <div class="avatar" id="header-avatar-initial">U</div>
+                            <div class="user-details">
+                                <h4 id="header-user-name">User Name</h4>
+                                <span id="header-user-role">Role</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:16px;"></i>
+                        </div>
+                        <div class="dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h2>My Bookings</h2>
+                        <p>View your reservations and history.</p>
+                    </div>
+                    <a href="rooms.html" class="btn btn-primary">Book New Room</a>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table" id="my-bookings-table">
+                            <thead>
+                                <tr>
+                                    <th>Booking ID</th>
+                                    <th>Room</th>
+                                    <th>Check In / Out</th>
+                                    <th>Amount</th>
+                                    <th>Payment Status</th>
+                                    <th>Booking Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.checkRole(['Guest']);
+            renderMyBookings();
+
+            const themeToggle = document.getElementById('theme-toggle');
+            if(themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const isDark = document.body.classList.contains('dark-mode');
+                    themeToggle.innerHTML = `<i data-lucide="${isDark ? 'sun' : 'moon'}"></i>`;
+                    lucide.createIcons();
+                });
+            }
+        });
+
+        function renderMyBookings() {
+            const user = auth.getCurrentUser();
+            let bookings = storage.get('hostel_bookings').filter(b => b.guestId === user.id || b.guestName === user.name);
+            
+            bookings.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            const tbody = document.querySelector('#my-bookings-table tbody');
+            tbody.innerHTML = '';
+
+            if (bookings.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:2rem;">You have no bookings yet.</td></tr>`;
+            }
+
+            bookings.forEach(b => {
+                let actions = `<button class="btn btn-outline btn-sm" onclick="printReceipt(${b.id})" title="Print Receipt"><i data-lucide="download"></i></button>`;
+                
+                if (b.status === 'Confirmed' || b.status === 'Pending') {
+                    actions += ` <button class="btn btn-danger btn-sm" onclick="cancelBooking(${b.id})">Cancel</button>`;
+                }
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td>#${b.id}</td>
+                        <td>Room ${b.roomNumber}</td>
+                        <td>
+                            <div style="font-size:0.875rem;">
+                                <span>${utils.formatDate(b.checkIn)}</span> - 
+                                <span>${utils.formatDate(b.checkOut)}</span>
+                            </div>
+                        </td>
+                        <td><strong>${utils.formatCurrency(b.amount)}</strong></td>
+                        <td><span class="badge ${utils.getStatusBadgeClass(b.paymentStatus)}">${b.paymentStatus}</span></td>
+                        <td><span class="badge ${utils.getStatusBadgeClass(b.status)}">${b.status}</span></td>
+                        <td>${actions}</td>
+                    </tr>
+                `;
+            });
+
+            lucide.createIcons();
+        }
+
+        function cancelBooking(id) {
+            if (confirm('Are you sure you want to cancel this booking?')) {
+                const booking = storage.get('hostel_bookings').find(b => b.id === id);
+                if (booking) {
+                    booking.status = 'Cancelled';
+                    storage.update('hostel_bookings', id, booking);
+                    
+                    const room = storage.get('hostel_rooms').find(r => r.id === booking.roomId);
+                    if (room) {
+                        room.status = 'Available';
+                        storage.update('hostel_rooms', room.id, room);
+                    }
+
+                    utils.showToast('Booking cancelled', 'success');
+                    renderMyBookings();
+                }
+            }
+        }
+
+        function printReceipt(id) {
+            // Same as in bookings.js
+            const booking = storage.get('hostel_bookings').find(b => b.id === id);
+            if (!booking) return;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+        <html lang="en">
+        <head>
+            <title>Invoice - #${booking.id}</title>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+                body { 
+                    font-family: 'Inter', sans-serif; 
+                    padding: 40px; 
+                    color: #1E293B; 
+                    background: #F8FAFC; 
+                    -webkit-print-color-adjust: exact;
+                }
+                .invoice-box {
+                    max-width: 800px;
+                    margin: auto;
+                    padding: 40px;
+                    background: #FFFFFF;
+                    border-radius: 16px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+                }
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-bottom: 2px solid #F1F5F9;
+                    padding-bottom: 30px;
+                    margin-bottom: 40px;
+                }
+                .logo {
+                    font-size: 28px;
+                    font-weight: 800;
+                    color: #4F46E5;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+                .logo-icon {
+                    width: 40px; height: 40px;
+                    background: #4F46E5;
+                    border-radius: 10px;
+                    display: flex; justify-content: center; align-items: center;
+                    color: white; font-size: 20px;
+                }
+                .company-info {
+                    text-align: right;
+                    color: #64748B;
+                    font-size: 14px;
+                }
+                .invoice-title {
+                    font-size: 36px;
+                    font-weight: 800;
+                    margin: 0;
+                    color: #0F172A;
+                }
+                .grid-2 {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 20px;
+                    margin-bottom: 40px;
+                }
+                .info-block h4 {
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    color: #64748B;
+                    margin: 0 0 5px 0;
+                    letter-spacing: 0.05em;
+                }
+                .info-block p { margin: 0; font-weight: 600; font-size: 15px; }
+                
+                .table-container { margin-bottom: 40px; }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+                th {
+                    background: #F8FAFC;
+                    color: #64748B;
+                    font-size: 12px;
+                    text-transform: uppercase;
+                    padding: 15px;
+                    text-align: left;
+                    font-weight: 600;
+                }
+                td {
+                    padding: 15px;
+                    border-bottom: 1px solid #F1F5F9;
+                    font-weight: 500;
+                }
+                .total-row {
+                    display: flex;
+                    justify-content: flex-end;
+                    padding-top: 20px;
+                }
+                .total-box {
+                    background: #EEF2FF;
+                    padding: 20px 30px;
+                    border-radius: 12px;
+                    min-width: 250px;
+                }
+                .total-box .line {
+                    display: flex; justify-content: space-between; margin-bottom: 10px;
+                    color: #4F46E5; font-weight: 600;
+                }
+                .total-box .final {
+                    display: flex; justify-content: space-between;
+                    font-size: 24px; font-weight: 800; color: #4F46E5;
+                    border-top: 2px solid #C7D2FE;
+                    padding-top: 10px; margin-top: 10px;
+                }
+                .badge {
+                    padding: 5px 12px;
+                    border-radius: 20px;
+                    font-size: 12px;
+                    font-weight: 700;
+                    background: #DC2626; color: white;
+                }
+                .badge.Paid, .badge.Confirmed { background: #10B981; }
+                .footer-note {
+                    text-align: center;
+                    color: #94A3B8;
+                    font-size: 14px;
+                    margin-top: 50px;
+                    padding-top: 20px;
+                    border-top: 1px dashed #E2E8F0;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="invoice-box">
+                <div class="header">
+                    <div>
+                        <div class="logo">
+                            <div class="logo-icon">H</div>
+                            HostelHub
+                        </div>
+                    </div>
+                    <div class="company-info">
+                        <h2 class="invoice-title">RECEIPT</h2>
+                        <p>#INV-${new Date().getFullYear()}-${String(booking.id).padStart(4, '0')}</p>
+                        <p>Date: ${new Date().toLocaleDateString()}</p>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-block">
+                        <h4>Billed To:</h4>
+                        <p style="font-size: 18px;">${booking.guestName}</p>
+                        <p style="color: #64748B; font-weight: 400; margin-top: 5px;">Guest ID: #${booking.guestId || '-'}</p>
+                    </div>
+                    <div class="info-block" style="text-align: right;">
+                        <h4>Payment Status</h4>
+                        <span class="badge ${booking.paymentStatus}">${booking.paymentStatus}</span>
+                        <h4 style="margin-top: 15px;">Booking Status</h4>
+                        <span class="badge ${booking.status}">${booking.status}</span>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Guests</th>
+                                <th style="text-align: right;">Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <strong style="color: #0F172A; display:block;">Room ${booking.roomNumber}</strong>
+                                    <span style="color: #64748B; font-size:13px;">Hostel Accommodation</span>
+                                </td>
+                                <td>${utils.formatDate(booking.checkIn)}</td>
+                                <td>${utils.formatDate(booking.checkOut)}</td>
+                                <td>${booking.guests}</td>
+                                <td style="text-align: right; font-weight: 700;">${utils.formatCurrency(booking.amount)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="total-row">
+                    <div class="total-box">
+                        <div class="line"><span>Subtotal:</span> <span>${utils.formatCurrency(booking.amount / 1.05)}</span></div>
+                        <div class="line"><span>Tax (5%):</span> <span>${utils.formatCurrency(booking.amount - (booking.amount / 1.05))}</span></div>
+                        <div class="final"><span>Total:</span> <span>${utils.formatCurrency(booking.amount)}</span></div>
+                    </div>
+                </div>
+
+                <div class="footer-note">
+                    <p>Thank you for choosing HostelHub. We hope you enjoyed your stay!</p>
+                    <p style="font-size: 12px; margin-top: 5px;">If you have any questions, please contact hamzazahooryts@gmail.com</p>
+                </div>
+            </div>
+        </body>
+        </html>
+    `);
+            printWindow.document.close();
+            setTimeout(() => {
+                printWindow.print();
+            }, 800);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .rooms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .room-img-wrapper {
+            height: 200px;
+            overflow: hidden;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            margin: -1.5rem -1.5rem 1.5rem -1.5rem;
+        }
+        .room-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .room-card:hover .room-img-wrapper img {
+            transform: scale(1.05);
+        }
+    </style>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="building-2" style="color:var(--primary); width:24px; height:24px;"></i>
+                <h2>HostelHub</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav"></nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                    <div style="position:relative;">
+                        <i data-lucide="search" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); width:16px; color:var(--text-muted);"></i>
+                        <input type="text" id="search-input" class="form-control" placeholder="Search rooms..." style="padding-left:2.5rem; width:250px; border-radius:var(--radius-full);">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
+                    <div class="user-dropdown">
+                        <div class="user-info" id="user-dropdown-btn">
+                            <div class="avatar" id="header-avatar-initial">U</div>
+                            <div class="user-details">
+                                <h4 id="header-user-name">User Name</h4>
+                                <span id="header-user-role">Role</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:16px;"></i>
+                        </div>
+                        <div class="dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item admin-only" style="display:none;"><i data-lucide="settings" style="width:16px;"></i> Settings</a>
+                            <div style="border-top:1px solid var(--border); margin:0.5rem 0;"></div>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h2>Rooms</h2>
+                        <p>Manage hostel rooms and availability.</p>
+                    </div>
+                    <div id="room-actions">
+                        <!-- Add Room button for admins -->
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                        <select class="form-control" id="filter-status" style="width:auto;">
+                            <option value="">All Statuses</option>
+                            <option value="Available">Available</option>
+                            <option value="Occupied">Occupied</option>
+                            <option value="Reserved">Reserved</option>
+                            <option value="Cleaning">Cleaning</option>
+                            <option value="Maintenance">Maintenance</option>
+                        </select>
+                        <select class="form-control" id="filter-type" style="width:auto;">
+                            <option value="">All Types</option>
+                            <option value="Single">Single</option>
+                            <option value="Double">Double</option>
+                            <option value="Twin">Twin</option>
+                            <option value="Triple">Triple</option>
+                            <option value="Dormitory">Dormitory</option>
+                            <option value="Deluxe">Deluxe</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="rooms-grid" id="rooms-container">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Room Modal -->
+    <div class="modal-overlay" id="room-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Add Room</h3>
+                <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+            </div>
+            <form id="room-form">
+                <input type="hidden" id="room-id">
+                <div class="form-group">
+                    <label class="form-label">Room Number</label>
+                    <input type="text" id="room-number" class="form-control" required>
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Floor</label>
+                        <input type="number" id="room-floor" class="form-control" required>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Capacity</label>
+                        <input type="number" id="room-capacity" class="form-control" required>
+                    </div>
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Type</label>
+                        <select id="room-type" class="form-control" required>
+                            <option value="Single">Single</option>
+                            <option value="Double">Double</option>
+                            <option value="Twin">Twin</option>
+                            <option value="Triple">Triple</option>
+                            <option value="Dormitory">Dormitory</option>
+                            <option value="Deluxe">Deluxe</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Price (PKR)</label>
+                        <input type="number" id="room-price" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select id="room-status" class="form-control" required>
+                        <option value="Available">Available</option>
+                        <option value="Occupied">Occupied</option>
+                        <option value="Reserved">Reserved</option>
+                        <option value="Cleaning">Cleaning</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Amenities (comma separated)</label>
+                    <input type="text" id="room-amenities" class="form-control" placeholder="Wi-Fi, AC, TV">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Image URL</label>
+                    <input type="url" id="room-image" class="form-control" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea id="room-description" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Save Room</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/rooms.js"></script>
+</body>
+</html>

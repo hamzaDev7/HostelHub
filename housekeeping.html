@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housekeeping - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="building-2" style="color:var(--primary); width:24px; height:24px;"></i>
+                <h2>HostelHub</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav"></nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                    <div style="position:relative;">
+                        <i data-lucide="search" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); width:16px; color:var(--text-muted);"></i>
+                        <input type="text" id="search-input" class="form-control" placeholder="Search tasks..." style="padding-left:2.5rem; width:250px; border-radius:var(--radius-full);">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
+                    <div class="user-dropdown">
+                        <div class="user-info" id="user-dropdown-btn">
+                            <div class="avatar" id="header-avatar-initial">U</div>
+                            <div class="user-details">
+                                <h4 id="header-user-name">User Name</h4>
+                                <span id="header-user-role">Role</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:16px;"></i>
+                        </div>
+                        <div class="dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item admin-only" style="display:none;"><i data-lucide="settings" style="width:16px;"></i> Settings</a>
+                            <div style="border-top:1px solid var(--border); margin:0.5rem 0;"></div>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h2>Housekeeping</h2>
+                        <p>Manage cleaning tasks and assignments.</p>
+                    </div>
+                    <div id="hk-actions"></div>
+                </div>
+
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                        <select class="form-control" id="filter-status" style="width:auto;">
+                            <option value="">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Inspection Required">Inspection Required</option>
+                        </select>
+                        <select class="form-control" id="filter-priority" style="width:auto;">
+                            <option value="">All Priorities</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                            <option value="Urgent">Urgent</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table" id="hk-table">
+                            <thead>
+                                <tr>
+                                    <th>Room</th>
+                                    <th>Assigned Staff</th>
+                                    <th>Priority</th>
+                                    <th>Next Cleaning</th>
+                                    <th>Notes</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Task Modal -->
+    <div class="modal-overlay" id="hk-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Create Task</h3>
+                <button class="modal-close" onclick="closeHKModal()"><i data-lucide="x"></i></button>
+            </div>
+            <form id="hk-form">
+                <input type="hidden" id="hk-id">
+                <div class="form-group" id="room-group">
+                    <label class="form-label">Room</label>
+                    <select id="hk-room" class="form-control" required></select>
+                </div>
+                <div class="form-group admin-only-field">
+                    <label class="form-label">Assign Staff</label>
+                    <select id="hk-staff" class="form-control" required></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Priority</label>
+                    <select id="hk-priority" class="form-control" required>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>
+                        <option value="High">High</option>
+                        <option value="Urgent">Urgent</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select id="hk-status" class="form-control" required>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Inspection Required">Inspection Required</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea id="hk-notes" class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Save Task</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/housekeeping.js"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="building-2" style="color:var(--primary); width:24px; height:24px;"></i>
+                <h2>HostelHub</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav"></nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                    <div style="position:relative;">
+                        <i data-lucide="search" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); width:16px; color:var(--text-muted);"></i>
+                        <input type="text" id="search-input" class="form-control" placeholder="Search staff..." style="padding-left:2.5rem; width:250px; border-radius:var(--radius-full);">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
+                    <div class="user-dropdown">
+                        <div class="user-info" id="user-dropdown-btn">
+                            <div class="avatar" id="header-avatar-initial">U</div>
+                            <div class="user-details">
+                                <h4 id="header-user-name">User Name</h4>
+                                <span id="header-user-role">Role</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:16px;"></i>
+                        </div>
+                        <div class="dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item admin-only" style="display:none;"><i data-lucide="settings" style="width:16px;"></i> Settings</a>
+                            <div style="border-top:1px solid var(--border); margin:0.5rem 0;"></div>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h2>Staff Management</h2>
+                        <p>Manage employees and roles.</p>
+                    </div>
+                    <button class="btn btn-primary admin-only" onclick="openStaffModal()"><i data-lucide="plus"></i> Add Staff</button>
+                </div>
+
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                        <select class="form-control" id="filter-role" style="width:auto;">
+                            <option value="">All Roles</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Receptionist">Receptionist</option>
+                            <option value="Housekeeping">Housekeeping</option>
+                            <option value="Security">Security</option>
+                            <option value="Maintenance">Maintenance</option>
+                        </select>
+                        <select class="form-control" id="filter-status" style="width:auto;">
+                            <option value="">All Statuses</option>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="On Leave">On Leave</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table" id="staff-table">
+                            <thead>
+                                <tr>
+                                    <th>Emp ID</th>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Role / Dept</th>
+                                    <th>Joining Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Staff Modal -->
+    <div class="modal-overlay" id="staff-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Add Staff</h3>
+                <button class="modal-close" onclick="closeStaffModal()"><i data-lucide="x"></i></button>
+            </div>
+            <form id="staff-form">
+                <input type="hidden" id="staff-id">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" id="staff-name" class="form-control" required>
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="staff-email" class="form-control" required>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Phone</label>
+                        <input type="text" id="staff-phone" class="form-control" required>
+                    </div>
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Role</label>
+                        <select id="staff-role" class="form-control" required>
+                            <option value="Manager">Manager</option>
+                            <option value="Receptionist">Receptionist</option>
+                            <option value="Housekeeping">Housekeeping</option>
+                            <option value="Security">Security</option>
+                            <option value="Maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Department</label>
+                        <input type="text" id="staff-dept" class="form-control" required>
+                    </div>
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Status</label>
+                        <select id="staff-status" class="form-control" required>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                            <option value="On Leave">On Leave</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Salary Status</label>
+                        <select id="staff-salary-status" class="form-control" required>
+                            <option value="Paid">Paid</option>
+                            <option value="Not Received Yet">Not Received Yet</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Save Staff</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/staff.js"></script>
+</body>
+</html>

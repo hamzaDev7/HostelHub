@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="building-2" style="color:var(--primary); width:24px; height:24px;"></i>
+                <h2>HostelHub</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav"></nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
+                    <div class="user-dropdown">
+                        <div class="user-info" id="user-dropdown-btn">
+                            <div class="avatar" id="header-avatar-initial">U</div>
+                            <div class="user-details">
+                                <h4 id="header-user-name">User Name</h4>
+                                <span id="header-user-role">Role</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:16px;"></i>
+                        </div>
+                        <div class="dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h2>My Profile</h2>
+                        <p>Manage your account settings and personal information.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="max-width:800px;">
+                    <div style="display:flex; gap:2rem; align-items:center; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid var(--border);">
+                        <div style="width:100px; height:100px; border-radius:50%; background:var(--primary); color:white; display:flex; align-items:center; justify-content:center; font-size:3rem; font-weight:600;" id="profile-avatar-large">
+                            U
+                        </div>
+                        <div>
+                            <h3 id="profile-name-display" style="margin:0 0 0.5rem 0;">User Name</h3>
+                            <p id="profile-role-display" style="color:var(--text-muted); margin:0;">Role</p>
+                        </div>
+                    </div>
+
+                    <form id="profile-form">
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+                            <div class="form-group">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" id="profile-name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" id="profile-email" class="form-control" required readonly title="Email cannot be changed">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="text" id="profile-phone" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date of Birth</label>
+                                <input type="date" id="profile-dob" class="form-control">
+                            </div>
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label class="form-label">Address</label>
+                                <textarea id="profile-address" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label class="form-label">Emergency Contact</label>
+                                <input type="text" id="profile-emergency" class="form-control">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top:1.5rem;">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = auth.checkAuth();
+            if(!user) return;
+
+            document.getElementById('profile-name-display').textContent = user.name;
+            document.getElementById('profile-role-display').textContent = user.role;
+            document.getElementById('profile-avatar-large').textContent = user.name.charAt(0).toUpperCase();
+
+            document.getElementById('profile-name').value = user.name;
+            document.getElementById('profile-email').value = user.email;
+            document.getElementById('profile-phone').value = user.phone || '';
+            document.getElementById('profile-dob').value = user.dob || '';
+            document.getElementById('profile-address').value = user.address || '';
+            document.getElementById('profile-emergency').value = user.emergencyContact || '';
+
+            document.getElementById('profile-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const updatedUser = {
+                    ...user,
+                    name: document.getElementById('profile-name').value,
+                    phone: document.getElementById('profile-phone').value,
+                    dob: document.getElementById('profile-dob').value,
+                    address: document.getElementById('profile-address').value,
+                    emergencyContact: document.getElementById('profile-emergency').value
+                };
+
+                // Update users list
+                const users = storage.get('hostel_users');
+                const index = users.findIndex(u => u.email === user.email);
+                if (index !== -1) {
+                    users[index] = updatedUser;
+                    storage.set('hostel_users', users);
+                    localStorage.setItem('hostel_currentUser', JSON.stringify(updatedUser));
+                    
+                    document.getElementById('profile-name-display').textContent = updatedUser.name;
+                    document.getElementById('header-user-name').textContent = updatedUser.name;
+                    document.getElementById('header-avatar-initial').textContent = updatedUser.name.charAt(0).toUpperCase();
+                    document.getElementById('profile-avatar-large').textContent = updatedUser.name.charAt(0).toUpperCase();
+
+                    utils.showToast('Profile updated successfully', 'success');
+                }
+            });
+
+            const themeToggle = document.getElementById('theme-toggle');
+            if(themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const isDark = document.body.classList.contains('dark-mode');
+                    themeToggle.innerHTML = `<i data-lucide="${isDark ? 'sun' : 'moon'}"></i>`;
+                    lucide.createIcons();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

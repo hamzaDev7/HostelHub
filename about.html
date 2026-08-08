@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="landing-header">
+        <div class="nav-container">
+            <div class="logo">
+                <i data-lucide="building-2"></i> HostelHub
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="our-rooms.html">Rooms</a>
+                <a href="facilities.html">Facilities</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="static-page-header">
+        <h1>About HostelHub</h1>
+        <p>Discover our story and mission to provide the best accommodation.</p>
+    </div>
+
+    <!-- Content -->
+    <div class="static-content">
+        <h2>Our Mission</h2>
+        <p>At HostelHub, our mission is to redefine the hostel experience. We believe that affordable accommodation should never mean compromising on quality, comfort, or safety. Since our inception, we have been dedicated to providing a home away from home for students, travelers, and professionals alike.</p>
+        
+        <h2>Our Story</h2>
+        <p>HostelHub was founded by a group of passionate travelers who realized that the market lacked a truly modern, comfortable, and well-managed hostel experience. We set out to create a space that combines the community feel of traditional hostels with the comfort and privacy of modern apartments. Today, HostelHub is proud to host thousands of guests from all over the world.</p>
+
+        <h2>Why Choose Us?</h2>
+        <ul>
+            <li><strong>Prime Location:</strong> Situated in the heart of the city, offering easy access to universities, business districts, and tourist attractions.</li>
+            <li><strong>State-of-the-Art Security:</strong> 24/7 CCTV surveillance and secure keycard access for your peace of mind.</li>
+            <li><strong>Community Driven:</strong> Regular community events, study groups, and networking opportunities.</li>
+            <li><strong>Uncompromised Hygiene:</strong> Daily professional housekeeping and deep cleaning protocols.</li>
+        </ul>
+
+        <h2>Meet the Team</h2>
+        <p>Our dedicated team works round the clock to ensure your stay is comfortable. From our friendly receptionists to our diligent housekeeping staff, every member of the HostelHub family is here to serve you.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="logo" style="color:white; margin-bottom:1rem;">
+                    <i data-lucide="building-2"></i> HostelHub
+                </div>
+                <p style="color:#94A3B8;">Your comfortable stay, managed simply. We provide the best accommodation experiences.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="our-rooms.html">Rooms</a>
+                <a href="about.html">About</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <a href="#"><i data-lucide="map-pin" style="width:16px; display:inline-block; margin-right:5px;"></i> University Of Gujrat</a>
+                <a href="#"><i data-lucide="phone" style="width:16px; display:inline-block; margin-right:5px;"></i> +923348910673</a>
+                <a href="#"><i data-lucide="mail" style="width:16px; display:inline-block; margin-right:5px;"></i> hamzazahooryts@gmail.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 HostelHub Management System. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        lucide.createIcons();
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

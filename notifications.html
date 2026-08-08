@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .notification-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .notification-item.unread {
+            background-color: rgba(37, 99, 235, 0.05);
+        }
+        .notification-item:hover {
+            background-color: rgba(0,0,0,0.02);
+        }
+        .dark-mode .notification-item:hover {
+            background-color: rgba(255,255,255,0.02);
+        }
+        .notif-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .notif-content {
+            flex: 1;
+        }
+        .notif-content h4 {
+            margin: 0 0 0.25rem 0;
+        }
+        .notif-content p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        .notif-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        .notif-actions {
+            display: flex;
+            align-items: flex-start;
+        }
+    </style>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="building-2" style="color:var(--primary); width:24px; height:24px;"></i>
+                <h2>HostelHub</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav"></nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <div class="user-dropdown">
+                        <div class="user-info" id="user-dropdown-btn">
+                            <div class="avatar" id="header-avatar-initial">U</div>
+                            <div class="user-details">
+                                <h4 id="header-user-name">User Name</h4>
+                                <span id="header-user-role">Role</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:16px;"></i>
+                        </div>
+                        <div class="dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h2>Notifications</h2>
+                        <p>View system alerts and updates.</p>
+                    </div>
+                    <button class="btn btn-outline" onclick="markAllRead()"><i data-lucide="check-check"></i> Mark all as read</button>
+                </div>
+
+                <div class="card" style="padding:0; overflow:hidden;" id="notifications-list">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.checkAuth();
+            renderNotifications();
+
+            const themeToggle = document.getElementById('theme-toggle');
+            if(themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const isDark = document.body.classList.contains('dark-mode');
+                    themeToggle.innerHTML = `<i data-lucide="${isDark ? 'sun' : 'moon'}"></i>`;
+                    lucide.createIcons();
+                });
+            }
+        });
+
+        function renderNotifications() {
+            let notifs = storage.get('hostel_notifications');
+            notifs.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            const container = document.getElementById('notifications-list');
+            container.innerHTML = '';
+
+            if (notifs.length === 0) {
+                container.innerHTML = `<div style="padding:3rem; text-align:center; color:var(--text-muted);">
+                    <i data-lucide="bell-off" style="width:48px; height:48px; margin-bottom:1rem;"></i>
+                    <p>No notifications found.</p>
+                </div>`;
+            }
+
+            notifs.forEach(n => {
+                let icon = 'bell';
+                if(n.title.includes('Booking')) icon = 'calendar';
+                if(n.title.includes('Payment')) icon = 'dollar-sign';
+                if(n.title.includes('Task')) icon = 'sparkles';
+
+                container.innerHTML += `
+                    <div class="notification-item ${n.read ? '' : 'unread'}">
+                        <div class="notif-icon"><i data-lucide="${icon}"></i></div>
+                        <div class="notif-content">
+                            <h4>${n.title}</h4>
+                            <p>${n.message}</p>
+                            <div class="notif-time">${new Date(n.date).toLocaleString()}</div>
+                        </div>
+                        <div class="notif-actions">
+                            ${!n.read ? `<button class="icon-btn" onclick="markRead(${n.id})" title="Mark as read"><i data-lucide="check"></i></button>` : ''}
+                            <button class="icon-btn" style="color:var(--danger);" onclick="deleteNotif(${n.id})" title="Delete"><i data-lucide="trash-2"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            lucide.createIcons();
+        }
+
+        function markRead(id) {
+            const notif = storage.get('hostel_notifications').find(n => n.id === id);
+            if (notif) {
+                notif.read = true;
+                storage.update('hostel_notifications', id, notif);
+                renderNotifications();
+            }
+        }
+
+        function markAllRead() {
+            const notifs = storage.get('hostel_notifications');
+            notifs.forEach(n => n.read = true);
+            storage.set('hostel_notifications', notifs);
+            renderNotifications();
+        }
+
+        function deleteNotif(id) {
+            storage.remove('hostel_notifications', id);
+            renderNotifications();
+        }
+    </script>
+</body>
+</html>

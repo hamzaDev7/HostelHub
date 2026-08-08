@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Profile - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .profile-header {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 600;
+        }
+        .profile-info h1 {
+            margin: 0 0 0.5rem 0;
+        }
+        .profile-info p {
+            margin: 0;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="building-2" style="color:var(--primary); width:24px; height:24px;"></i>
+                <h2>HostelHub</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav"></nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
+                    <div class="user-dropdown">
+                        <div class="user-info" id="user-dropdown-btn">
+                            <div class="avatar" id="header-avatar-initial">U</div>
+                            <div class="user-details">
+                                <h4 id="header-user-name">User Name</h4>
+                                <span id="header-user-role">Role</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:16px;"></i>
+                        </div>
+                        <div class="dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <a href="staff.html" class="btn btn-outline" style="margin-bottom:1rem;"><i data-lucide="arrow-left"></i> Back to Staff</a>
+                
+                <div id="staff-profile-container">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            auth.checkRole(['Super Admin', 'Manager']);
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const staffId = parseInt(urlParams.get('id'));
+            
+            if (!staffId) {
+                window.location.href = 'staff.html';
+                return;
+            }
+
+            const staff = storage.get('hostel_staff').find(s => s.id === staffId);
+            if (!staff) {
+                document.getElementById('staff-profile-container').innerHTML = '<h3>Staff not found</h3>';
+                return;
+            }
+
+            renderStaffProfile(staff);
+
+            const themeToggle = document.getElementById('theme-toggle');
+            if(themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.body.classList.toggle('dark-mode');
+                    const isDark = document.body.classList.contains('dark-mode');
+                    themeToggle.innerHTML = `<i data-lucide="${isDark ? 'sun' : 'moon'}"></i>`;
+                    lucide.createIcons();
+                });
+            }
+        });
+
+        function renderStaffProfile(staff) {
+            const container = document.getElementById('staff-profile-container');
+            const tasks = storage.get('hostel_housekeeping').filter(t => t.staffId === staff.id);
+            
+            let tasksHtml = '';
+            if (staff.role === 'Housekeeping') {
+                const pending = tasks.filter(t => t.status !== 'Completed').length;
+                const completed = tasks.filter(t => t.status === 'Completed').length;
+                
+                tasksHtml = `
+                    <div class="card" style="margin-top:2rem;">
+                        <h3>Performance Summary</h3>
+                        <div style="display:flex; gap:2rem; margin-top:1rem;">
+                            <div style="text-align:center;">
+                                <h2 style="color:var(--primary); margin:0;">${tasks.length}</h2>
+                                <p style="color:var(--text-muted); font-size:0.875rem;">Total Tasks</p>
+                            </div>
+                            <div style="text-align:center;">
+                                <h2 style="color:var(--info); margin:0;">${pending}</h2>
+                                <p style="color:var(--text-muted); font-size:0.875rem;">Pending Tasks</p>
+                            </div>
+                            <div style="text-align:center;">
+                                <h2 style="color:var(--success); margin:0;">${completed}</h2>
+                                <p style="color:var(--text-muted); font-size:0.875rem;">Completed Tasks</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar">${staff.name.charAt(0).toUpperCase()}</div>
+                    <div class="profile-info">
+                        <h1>${staff.name} <span class="badge ${utils.getStatusBadgeClass(staff.status)}" style="vertical-align:middle; margin-left:10px;">${staff.status}</span></h1>
+                        <p style="font-size:1.1rem; color:var(--primary); margin-bottom:0.5rem;">${staff.role} - ${staff.department}</p>
+                        <p><i data-lucide="briefcase" style="width:16px;"></i> ID: ${staff.employeeId || 'EMP'+staff.id}</p>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3 style="border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-bottom:1rem;">Contact Information</h3>
+                        <div style="margin-bottom:1rem;">
+                            <label style="color:var(--text-muted); font-size:0.875rem;">Email Address</label>
+                            <p style="margin:0; font-weight:500;">${staff.email}</p>
+                        </div>
+                        <div style="margin-bottom:1rem;">
+                            <label style="color:var(--text-muted); font-size:0.875rem;">Phone Number</label>
+                            <p style="margin:0; font-weight:500;">${staff.phone}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="border-bottom:1px solid var(--border); padding-bottom:0.5rem; margin-bottom:1rem;">Employment Details</h3>
+                        <div style="margin-bottom:1rem;">
+                            <label style="color:var(--text-muted); font-size:0.875rem;">Joining Date</label>
+                            <p style="margin:0; font-weight:500;">${utils.formatDate(staff.joiningDate)}</p>
+                        </div>
+                        <div style="margin-bottom:1rem;">
+                            <label style="color:var(--text-muted); font-size:0.875rem;">Department</label>
+                            <p style="margin:0; font-weight:500;">${staff.department}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                ${tasksHtml}
+            `;
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

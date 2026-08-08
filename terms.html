@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="landing-header">
+        <div class="nav-container">
+            <div class="logo">
+                <i data-lucide="building-2"></i> HostelHub
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="our-rooms.html">Rooms</a>
+                <a href="facilities.html">Facilities</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="static-page-header">
+        <h1>Terms & Conditions</h1>
+        <p>Please read these terms carefully before using our services.</p>
+    </div>
+
+    <!-- Content -->
+    <div class="static-content">
+        <h2>1. Introduction</h2>
+        <p>Welcome to HostelHub. By accessing our website or booking an accommodation with us, you agree to be bound by these Terms and Conditions. Please read them carefully.</p>
+
+        <h2>2. Booking & Reservations</h2>
+        <p>All bookings are subject to availability and confirmation. A valid identification document must be provided at the time of check-in. Minors must be accompanied by a legal guardian or possess a written consent letter.</p>
+
+        <h2>3. Payment & Cancellation Policy</h2>
+        <ul>
+            <li>Payments must be made in full before or at the time of check-in.</li>
+            <li>Cancellations made 48 hours prior to the check-in date are eligible for a full refund.</li>
+            <li>Cancellations made within 48 hours will incur a fee equivalent to one night's stay.</li>
+            <li>No-shows will be charged the full amount of the booking.</li>
+        </ul>
+
+        <h2>4. Code of Conduct</h2>
+        <p>Guests are expected to behave respectfully towards other residents and staff. Any form of harassment, illegal activities, or damage to property will result in immediate eviction without refund and potential legal action.</p>
+
+        <h2>5. Property Damage</h2>
+        <p>Guests are responsible for any damage caused to hostel property during their stay. The cost of repairs or replacements will be charged directly to the guest.</p>
+
+        <h2>6. Liability</h2>
+        <p>HostelHub is not liable for any loss, theft, or damage to personal belongings. Guests are encouraged to use the lockers provided and keep their valuables secure.</p>
+
+        <p style="margin-top: 3rem; font-style: italic;">Last Updated: August 2026</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="logo" style="color:white; margin-bottom:1rem;">
+                    <i data-lucide="building-2"></i> HostelHub
+                </div>
+                <p style="color:#94A3B8;">Your comfortable stay, managed simply. We provide the best accommodation experiences.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="our-rooms.html">Rooms</a>
+                <a href="about.html">About</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <a href="#"><i data-lucide="map-pin" style="width:16px; display:inline-block; margin-right:5px;"></i> University Of Gujrat</a>
+                <a href="#"><i data-lucide="phone" style="width:16px; display:inline-block; margin-right:5px;"></i> +923348910673</a>
+                <a href="#"><i data-lucide="mail" style="width:16px; display:inline-block; margin-right:5px;"></i> hamzazahooryts@gmail.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 HostelHub Management System. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        lucide.createIcons();
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

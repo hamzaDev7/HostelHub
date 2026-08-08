@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guests - HostelHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i data-lucide="building-2" style="color:var(--primary); width:24px; height:24px;"></i>
+                <h2>HostelHub</h2>
+            </div>
+            <nav class="sidebar-nav" id="sidebar-nav"></nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                    <div style="position:relative;">
+                        <i data-lucide="search" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); width:16px; color:var(--text-muted);"></i>
+                        <input type="text" id="search-input" class="form-control" placeholder="Search guests..." style="padding-left:2.5rem; width:250px; border-radius:var(--radius-full);">
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                        <i data-lucide="search"></i>
+                    </button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
+                    <div class="user-dropdown">
+                        <div class="user-info" id="user-dropdown-btn">
+                            <div class="avatar" id="header-avatar-initial">U</div>
+                            <div class="user-details">
+                                <h4 id="header-user-name">User Name</h4>
+                                <span id="header-user-role">Role</span>
+                            </div>
+                            <i data-lucide="chevron-down" style="width:16px;"></i>
+                        </div>
+                        <div class="dropdown-menu" id="user-dropdown-menu">
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
+                            <a href="settings.html" class="dropdown-item admin-only" style="display:none;"><i data-lucide="settings" style="width:16px;"></i> Settings</a>
+                            <div style="border-top:1px solid var(--border); margin:0.5rem 0;"></div>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div>
+                        <h2>Guests</h2>
+                        <p>Manage hostel guests and their details.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom:1.5rem;">
+                    <select class="form-control" id="filter-status" style="width:auto;">
+                        <option value="">All Statuses</option>
+                        <option value="Checked In">Checked In</option>
+                        <option value="Reserved">Reserved</option>
+                        <option value="Checked Out">Checked Out</option>
+                        <option value="Active">Active</option>
+                    </select>
+                </div>
+
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table" id="guests-table">
+                            <thead>
+                                <tr>
+                                    <th>Guest ID</th>
+                                    <th>Name</th>
+                                    <th>Contact</th>
+                                    <th>Current Room</th>
+                                    <th>Check In / Out</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Populated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Guest Modal -->
+    <div class="modal-overlay" id="guest-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Edit Guest</h3>
+                <button class="modal-close" onclick="closeGuestModal()"><i data-lucide="x"></i></button>
+            </div>
+            <form id="guest-form">
+                <input type="hidden" id="edit-guest-id">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" id="edit-guest-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="edit-guest-email" class="form-control" required>
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Phone</label>
+                        <input type="text" id="edit-guest-phone" class="form-control" required>
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Room Number</label>
+                        <input type="text" id="edit-guest-room" class="form-control" placeholder="e.g. 101">
+                    </div>
+                </div>
+                <div style="display:flex; gap:1rem;">
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Check-In</label>
+                        <input type="datetime-local" id="edit-guest-checkin" class="form-control">
+                    </div>
+                    <div class="form-group" style="flex:1;">
+                        <label class="form-label">Check-Out</label>
+                        <input type="datetime-local" id="edit-guest-checkout" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select id="edit-guest-status" class="form-control">
+                        <option value="Active">Active</option>
+                        <option value="Checked In">Checked In</option>
+                        <option value="Reserved">Reserved</option>
+                        <option value="Checked Out">Checked Out</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/guests.js"></script>
+</body>
+</html>

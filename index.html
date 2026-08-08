@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content="HostelHub - Professional Hostel Management System">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HostelHub - Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="landing-header">
+        <div class="nav-container">
+            <div class="logo">
+                <i data-lucide="building-2"></i> HostelHub
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                <i data-lucide="menu"></i>
+            </button>
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="our-rooms.html">Rooms</a>
+                <a href="facilities.html">Facilities</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Your Comfortable Stay, Managed Simply</h1>
+            <p>HostelHub provides convenient hostel booking and professional accommodation management. Experience premium stays with seamless booking.</p>
+            <div class="hero-buttons">
+                <a href="our-rooms.html" class="btn btn-primary btn-lg" style="padding: 1rem 2rem; font-size: 1.1rem;">Book a Room</a>
+                <a href="signup.html" class="btn btn-outline btn-lg" style="padding: 1rem 2rem; font-size: 1.1rem; color:white; border-color:white;">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <!-- <div class="search-bar card">
+        <form class="search-form" id="booking-search-form">
+            <div class="form-group">
+                <label class="form-label">Check-in</label>
+                <input type="date" class="form-control" id="search-checkin" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Check-out</label>
+                <input type="date" class="form-control" id="search-checkout" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Guests</label>
+                <select class="form-control" id="search-guests">
+                    <option value="1">1 Guest</option>
+                    <option value="2">2 Guests</option>
+                    <option value="3">3 Guests</option>
+                    <option value="4">4+ Guests</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Room Type</label>
+                <select class="form-control" id="search-type">
+                    <option value="All">All Types</option>
+                    <option value="Single">Single</option>
+                    <option value="Double">Double</option>
+                    <option value="Dormitory">Dormitory</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" style="height: 42px; margin-bottom: 1rem;">Search Rooms</button>
+        </form>
+    </div> -->
+
+    <!-- Features -->
+    <section class="section bg-light" id="features">
+        <h2 class="section-title">Why Choose HostelHub</h2>
+        <div class="features-grid">
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="calendar-check"></i></div>
+                <h3>Easy Booking</h3>
+                <p>Book your perfect room in seconds with our streamlined process.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="shield-check"></i></div>
+                <h3>Secure Payments</h3>
+                <p>Multiple safe and secure payment options available.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="bed-double"></i></div>
+                <h3>Comfortable Rooms</h3>
+                <p>Clean, spacious, and fully equipped rooms for your comfort.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="sparkles"></i></div>
+                <h3>Housekeeping</h3>
+                <p>Daily professional housekeeping services to keep things spotless.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="wifi"></i></div>
+                <h3>High-Speed Wi-Fi</h3>
+                <p>Stay connected with our complimentary high-speed internet.</p>
+            </div>
+            <div class="card feature-card">
+                <div class="feature-icon"><i data-lucide="clock"></i></div>
+                <h3>24/7 Support</h3>
+                <p>Our reception and support team is available round the clock.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Room Preview Section -->
+    <section class="section" id="rooms">
+        <h2 class="section-title">Explore Our Rooms</h2>
+        <div class="rooms-grid" id="landing-rooms-grid">
+            <!-- Populated via JS -->
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="signup.html" class="btn btn-outline">View All Rooms</a>
+        </div>
+    </section>
+
+    <!-- Facilities -->
+    <section class="section bg-light" id="facilities">
+        <h2 class="section-title">Top Facilities</h2>
+        <div style="display:flex; flex-wrap:wrap; gap:1rem; justify-content:center;">
+            <span class="badge badge-info" style="font-size:1rem; padding:0.5rem 1rem;"><i data-lucide="wifi" style="margin-right:5px"></i> Free Wi-Fi</span>
+            <span class="badge badge-info" style="font-size:1rem; padding:0.5rem 1rem;"><i data-lucide="car" style="margin-right:5px"></i> Parking</span>
+            <span class="badge badge-info" style="font-size:1rem; padding:0.5rem 1rem;"><i data-lucide="coffee" style="margin-right:5px"></i> Dining</span>
+            <span class="badge badge-info" style="font-size:1rem; padding:0.5rem 1rem;"><i data-lucide="tv" style="margin-right:5px"></i> Common Room</span>
+            <span class="badge badge-info" style="font-size:1rem; padding:0.5rem 1rem;"><i data-lucide="book-open" style="margin-right:5px"></i> Study Area</span>
+            <span class="badge badge-info" style="font-size:1rem; padding:0.5rem 1rem;"><i data-lucide="cctv" style="margin-right:5px"></i> 24/7 Security</span>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section" style="background:var(--primary); color:white; text-align:center; border-radius:var(--radius-lg); margin-bottom:5rem;">
+        <h2 style="color:white; margin-bottom:1rem;">Ready to find your perfect stay?</h2>
+        <p style="color:rgba(255,255,255,0.8); margin-bottom:2rem; font-size:1.1rem;">Join thousands of happy guests who have enjoyed their stay with HostelHub.</p>
+        <a href="signup.html" class="btn btn-secondary btn-lg" style="padding:1rem 2rem; background:white; color:var(--primary);">Book Your Room</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="logo" style="color:white; margin-bottom:1rem;">
+                    <i data-lucide="building-2"></i> HostelHub
+                </div>
+                <p style="color:#94A3B8;">Your comfortable stay, managed simply. We provide the best accommodation experiences.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="our-rooms.html">Rooms</a>
+                <a href="about.html">About</a>
+                <a href="login.html">Login</a>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <a href="terms.html">Terms & Conditions</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <a href="#"><i data-lucide="map-pin" style="width:16px; display:inline-block; margin-right:5px;"></i> University Of Gujrat</a>
+                <a href="#"><i data-lucide="phone" style="width:16px; display:inline-block; margin-right:5px;"></i> +923348910673</a>
+                <a href="#"><i data-lucide="mail" style="width:16px; display:inline-block; margin-right:5px;"></i> hamzazahooryts@gmail.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 HostelHub Management System. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('nav-links').classList.toggle('active');
+        });
+
+        // Load 3 rooms
+        const allRooms = storage.get('hostel_rooms');
+        const grid = document.getElementById('landing-rooms-grid');
+        
+        allRooms.slice(0, 3).forEach(room => {
+            grid.innerHTML += `
+                <div class="card room-card">
+                    <img src="${room.image}" alt="Room ${room.number}" class="room-img">
+                    <div class="room-details">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+                            <h3>${room.type} Room</h3>
+                            <span class="badge ${utils.getStatusBadgeClass(room.status)}">${room.status}</span>
+                        </div>
+                        <p style="margin-bottom:0.5rem;"><i data-lucide="users" style="width:16px;"></i> Up to ${room.capacity} Guests</p>
+                        <div class="room-price">${utils.formatCurrency(room.price)} / night</div>
+                        <div style="margin-top:1.5rem; display:flex; gap:10px;">
+                            <a href="signup.html" class="btn btn-outline" style="flex:1;">View Details</a>
+                            <a href="signup.html" class="btn btn-primary" style="flex:1;">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        lucide.createIcons();
+
+        document.getElementById('booking-search-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const checkin = document.getElementById('search-checkin').value;
+            const checkout = document.getElementById('search-checkout').value;
+            const guests = document.getElementById('search-guests').value;
+            const type = document.getElementById('search-type').value;
+
+            // Redirect to signup to book (since guest isn't logged in on landing page)
+            window.location.href = `signup.html?checkin=${checkin}&checkout=${checkout}&guests=${guests}&type=${type}`;
+        });
+    </script>
+</body>
+</html>
