@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9599135254804434"
+        crossorigin="anonymous"></script>
     <meta name="description" content="HostelHub - Professional Hostel Management System">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
-    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .rooms-grid {
@@ -17,24 +19,28 @@
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
+
         .room-img-wrapper {
             height: 200px;
             overflow: hidden;
             border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             margin: -1.5rem -1.5rem 1.5rem -1.5rem;
         }
+
         .room-img-wrapper img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: var(--transition);
         }
+
         .room-card:hover .room-img-wrapper img {
             transform: scale(1.05);
         }
     </style>
     <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar -->
@@ -50,17 +56,22 @@
         <main class="main-content">
             <header class="top-header">
                 <div class="header-left">
-                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i
+                            data-lucide="menu"></i></button>
                     <div style="position:relative;">
-                        <i data-lucide="search" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); width:16px; color:var(--text-muted);"></i>
-                        <input type="text" id="search-input" class="form-control" placeholder="Search rooms..." style="padding-left:2.5rem; width:250px; border-radius:var(--radius-full);">
+                        <i data-lucide="search"
+                            style="position:absolute; left:10px; top:50%; transform:translateY(-50%); width:16px; color:var(--text-muted);"></i>
+                        <input type="text" id="search-input" class="form-control" placeholder="Search rooms..."
+                            style="padding-left:2.5rem; width:250px; border-radius:var(--radius-full);">
                     </div>
                 </div>
                 <div class="header-right">
-                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;"
+                        aria-label="Search">
                         <i data-lucide="search"></i>
                     </button>
-                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i
+                            data-lucide="moon"></i></button>
                     <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
                     <div class="user-dropdown">
                         <div class="user-info" id="user-dropdown-btn">
@@ -72,10 +83,13 @@
                             <i data-lucide="chevron-down" style="width:16px;"></i>
                         </div>
                         <div class="dropdown-menu" id="user-dropdown-menu">
-                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
-                            <a href="settings.html" class="dropdown-item admin-only" style="display:none;"><i data-lucide="settings" style="width:16px;"></i> Settings</a>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i>
+                                Profile</a>
+                            <a href="settings.html" class="dropdown-item admin-only" style="display:none;"><i
+                                    data-lucide="settings" style="width:16px;"></i> Settings</a>
                             <div style="border-top:1px solid var(--border); margin:0.5rem 0;"></div>
-                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out"
+                                    style="width:16px;"></i> Logout</a>
                         </div>
                     </div>
                 </div>
@@ -193,11 +207,8 @@
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
     <script src="js/rooms.js"></script>
-    
-<script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'emzmigl58g',
-    });
-</script>
+
+
 </body>
+
 </html>

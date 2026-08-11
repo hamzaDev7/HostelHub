@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9599135254804434"
+        crossorigin="anonymous"></script>
     <meta name="description" content="HostelHub - Professional Hostel Management System">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +11,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
-    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
     <div class="app-container">
         <aside class="sidebar">
@@ -25,13 +28,16 @@
         <main class="main-content">
             <header class="top-header">
                 <div class="header-left">
-                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i
+                            data-lucide="menu"></i></button>
                 </div>
                 <div class="header-right">
-                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;"
+                        aria-label="Search">
                         <i data-lucide="search"></i>
                     </button>
-                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i
+                            data-lucide="moon"></i></button>
                     <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
                     <div class="user-dropdown">
                         <div class="user-info" id="user-dropdown-btn">
@@ -43,8 +49,10 @@
                             <i data-lucide="chevron-down" style="width:16px;"></i>
                         </div>
                         <div class="dropdown-menu" id="user-dropdown-menu">
-                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
-                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i>
+                                Profile</a>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out"
+                                    style="width:16px;"></i> Logout</a>
                         </div>
                     </div>
                 </div>
@@ -59,8 +67,10 @@
                 </div>
 
                 <div class="card" style="max-width:800px;">
-                    <div style="display:flex; gap:2rem; align-items:center; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid var(--border);">
-                        <div style="width:100px; height:100px; border-radius:50%; background:var(--primary); color:white; display:flex; align-items:center; justify-content:center; font-size:3rem; font-weight:600;" id="profile-avatar-large">
+                    <div
+                        style="display:flex; gap:2rem; align-items:center; margin-bottom:2rem; padding-bottom:2rem; border-bottom:1px solid var(--border);">
+                        <div style="width:100px; height:100px; border-radius:50%; background:var(--primary); color:white; display:flex; align-items:center; justify-content:center; font-size:3rem; font-weight:600;"
+                            id="profile-avatar-large">
                             U
                         </div>
                         <div>
@@ -77,7 +87,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Email Address</label>
-                                <input type="email" id="profile-email" class="form-control" required readonly title="Email cannot be changed">
+                                <input type="email" id="profile-email" class="form-control" required readonly
+                                    title="Email cannot be changed">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Phone Number</label>
@@ -110,7 +121,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = auth.checkAuth();
-            if(!user) return;
+            if (!user) return;
 
             document.getElementById('profile-name-display').textContent = user.name;
             document.getElementById('profile-role-display').textContent = user.role;
@@ -125,7 +136,7 @@
 
             document.getElementById('profile-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                
+
                 const updatedUser = {
                     ...user,
                     name: document.getElementById('profile-name').value,
@@ -142,7 +153,7 @@
                     users[index] = updatedUser;
                     storage.set('hostel_users', users);
                     localStorage.setItem('hostel_currentUser', JSON.stringify(updatedUser));
-                    
+
                     document.getElementById('profile-name-display').textContent = updatedUser.name;
                     document.getElementById('header-user-name').textContent = updatedUser.name;
                     document.getElementById('header-avatar-initial').textContent = updatedUser.name.charAt(0).toUpperCase();
@@ -153,7 +164,7 @@
             });
 
             const themeToggle = document.getElementById('theme-toggle');
-            if(themeToggle) {
+            if (themeToggle) {
                 themeToggle.addEventListener('click', () => {
                     document.body.classList.toggle('dark-mode');
                     const isDark = document.body.classList.contains('dark-mode');
@@ -163,11 +174,8 @@
             }
         });
     </script>
-    
-<script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'emzmigl58g',
-    });
-</script>
+
+
 </body>
+
 </html>

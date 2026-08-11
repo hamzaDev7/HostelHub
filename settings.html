@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9599135254804434"
+        crossorigin="anonymous"></script>
     <meta name="description" content="HostelHub - Professional Hostel Management System">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
-    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .settings-tabs {
@@ -17,6 +19,7 @@
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border);
         }
+
         .tab-btn {
             padding: 0.75rem 1.5rem;
             background: none;
@@ -27,50 +30,65 @@
             border-bottom: 2px solid transparent;
             margin-bottom: -1px;
         }
+
         .tab-btn.active {
             color: var(--primary);
             border-bottom-color: var(--primary);
         }
+
         .tab-content {
             display: none;
         }
+
         .tab-content.active {
             display: block;
         }
+
         .toggle-switch {
             position: relative;
             display: inline-block;
             width: 44px;
             height: 24px;
         }
+
         .toggle-switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
+
         .toggle-slider {
             position: absolute;
             cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             background-color: var(--border);
             transition: .4s;
             border-radius: 24px;
         }
+
         .toggle-slider:before {
             position: absolute;
             content: "";
-            height: 18px; width: 18px;
-            left: 3px; bottom: 3px;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
             background-color: white;
             transition: .4s;
             border-radius: 50%;
         }
-        input:checked + .toggle-slider {
+
+        input:checked+.toggle-slider {
             background-color: var(--success);
         }
-        input:checked + .toggle-slider:before {
+
+        input:checked+.toggle-slider:before {
             transform: translateX(20px);
         }
+
         .setting-item {
             display: flex;
             justify-content: space-between;
@@ -78,12 +96,14 @@
             padding: 1rem 0;
             border-bottom: 1px solid var(--border);
         }
+
         .setting-item:last-child {
             border-bottom: none;
         }
     </style>
     <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
     <div class="app-container">
         <aside class="sidebar">
@@ -97,13 +117,16 @@
         <main class="main-content">
             <header class="top-header">
                 <div class="header-left">
-                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i
+                            data-lucide="menu"></i></button>
                 </div>
                 <div class="header-right">
-                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;"
+                        aria-label="Search">
                         <i data-lucide="search"></i>
                     </button>
-                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i
+                            data-lucide="moon"></i></button>
                     <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
                     <div class="user-dropdown">
                         <div class="user-info" id="user-dropdown-btn">
@@ -115,8 +138,10 @@
                             <i data-lucide="chevron-down" style="width:16px;"></i>
                         </div>
                         <div class="dropdown-menu" id="user-dropdown-menu">
-                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
-                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i>
+                                Profile</a>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out"
+                                    style="width:16px;"></i> Logout</a>
                         </div>
                     </div>
                 </div>
@@ -220,7 +245,8 @@
                             <div class="setting-item">
                                 <div>
                                     <strong>Dark Mode</strong>
-                                    <p style="margin:0; font-size:0.875rem;">Enable dark mode across the application.</p>
+                                    <p style="margin:0; font-size:0.875rem;">Enable dark mode across the application.
+                                    </p>
                                 </div>
                                 <label class="toggle-switch">
                                     <input type="checkbox" id="set-theme-dark">
@@ -241,11 +267,8 @@
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
     <script src="js/settings.js"></script>
-    
-<script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'emzmigl58g',
-    });
-</script>
+
+
 </body>
+
 </html>

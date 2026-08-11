@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9599135254804434"
+        crossorigin="anonymous"></script>
     <meta name="description" content="HostelHub - Professional Hostel Management System">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,9 +12,9 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/landing.css">
     <link rel="stylesheet" href="css/responsive.css">
-    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <!-- Header -->
     <header class="landing-header">
@@ -42,7 +45,7 @@
 
     <!-- Content -->
     <div style="max-width: 1280px; margin: 0 auto; padding: 0 2rem;">
-        
+
         <!-- Search Section Toggle -->
         <div class="rooms-search-toggle">
             <button id="toggle-search-btn" class="btn btn-primary">
@@ -79,7 +82,8 @@
                         <option value="Dormitory">Dormitory</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary" style="height: 42px; margin-bottom: 1rem;">Search Rooms</button>
+                <button type="submit" class="btn btn-primary" style="height: 42px; margin-bottom: 1rem;">Search
+                    Rooms</button>
             </form>
         </div>
 
@@ -95,7 +99,8 @@
                 <div class="logo" style="color:white; margin-bottom:1rem;">
                     <i data-lucide="building-2"></i> HostelHub
                 </div>
-                <p style="color:#94A3B8;">Your comfortable stay, managed simply. We provide the best accommodation experiences.</p>
+                <p style="color:#94A3B8;">Your comfortable stay, managed simply. We provide the best accommodation
+                    experiences.</p>
             </div>
             <div>
                 <h4>Quick Links</h4>
@@ -112,9 +117,12 @@
             </div>
             <div>
                 <h4>Contact Us</h4>
-                <a href="#"><i data-lucide="map-pin" style="width:16px; display:inline-block; margin-right:5px;"></i> University Of Gujrat</a>
-                <a href="#"><i data-lucide="phone" style="width:16px; display:inline-block; margin-right:5px;"></i> +923348910673</a>
-                <a href="#"><i data-lucide="mail" style="width:16px; display:inline-block; margin-right:5px;"></i> hamzazahooryts@gmail.com</a>
+                <a href="#"><i data-lucide="map-pin" style="width:16px; display:inline-block; margin-right:5px;"></i>
+                    University Of Gujrat</a>
+                <a href="#"><i data-lucide="phone" style="width:16px; display:inline-block; margin-right:5px;"></i>
+                    +923348910673</a>
+                <a href="#"><i data-lucide="mail" style="width:16px; display:inline-block; margin-right:5px;"></i>
+                    hamzazahooryts@gmail.com</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -133,7 +141,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const allRooms = storage.get('hostel_rooms');
             const grid = document.getElementById('public-rooms-grid');
-            
+
             allRooms.forEach(room => {
                 grid.innerHTML += `
                     <div class="card room-card">
@@ -155,8 +163,8 @@
                     </div>
                 `;
             });
-            
-            
+
+
             lucide.createIcons();
 
             document.getElementById('booking-search-form').addEventListener('submit', (e) => {
@@ -180,11 +188,7 @@
             });
         });
     </script>
-    
-<script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'emzmigl58g',
-    });
-</script>
+
 </body>
+
 </html>

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9599135254804434"
+        crossorigin="anonymous"></script>
     <meta name="description" content="HostelHub - Professional Hostel Management System">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
-    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         .room-header-img {
@@ -18,17 +20,20 @@
             border-radius: var(--radius-lg);
             margin-bottom: 2rem;
         }
+
         .details-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 2rem;
         }
+
         .amenities-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 1rem;
             margin-top: 1rem;
         }
+
         .amenity-item {
             display: flex;
             align-items: center;
@@ -38,6 +43,7 @@
             border-radius: var(--radius-md);
             font-size: 0.875rem;
         }
+
         @media (max-width: 992px) {
             .details-grid {
                 grid-template-columns: 1fr;
@@ -46,6 +52,7 @@
     </style>
     <link rel="stylesheet" href="css/responsive.css">
 </head>
+
 <body>
     <div class="app-container">
         <!-- Sidebar -->
@@ -61,13 +68,16 @@
         <main class="main-content">
             <header class="top-header">
                 <div class="header-left">
-                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i data-lucide="menu"></i></button>
+                    <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle Sidebar"><i
+                            data-lucide="menu"></i></button>
                 </div>
                 <div class="header-right">
-                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;" aria-label="Search">
+                    <button class="icon-btn mobile-search-btn" id="mobile-search-btn" style="display:none;"
+                        aria-label="Search">
                         <i data-lucide="search"></i>
                     </button>
-                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i data-lucide="moon"></i></button>
+                    <button class="icon-btn" id="theme-toggle" aria-label="Toggle Theme"><i
+                            data-lucide="moon"></i></button>
                     <a href="notifications.html" class="icon-btn"><i data-lucide="bell"></i></a>
                     <div class="user-dropdown">
                         <div class="user-info" id="user-dropdown-btn">
@@ -79,18 +89,22 @@
                             <i data-lucide="chevron-down" style="width:16px;"></i>
                         </div>
                         <div class="dropdown-menu" id="user-dropdown-menu">
-                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i> Profile</a>
-                            <a href="settings.html" class="dropdown-item admin-only" style="display:none;"><i data-lucide="settings" style="width:16px;"></i> Settings</a>
+                            <a href="profile.html" class="dropdown-item"><i data-lucide="user" style="width:16px;"></i>
+                                Profile</a>
+                            <a href="settings.html" class="dropdown-item admin-only" style="display:none;"><i
+                                    data-lucide="settings" style="width:16px;"></i> Settings</a>
                             <div style="border-top:1px solid var(--border); margin:0.5rem 0;"></div>
-                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out" style="width:16px;"></i> Logout</a>
+                            <a href="#" class="dropdown-item" id="logout-btn"><i data-lucide="log-out"
+                                    style="width:16px;"></i> Logout</a>
                         </div>
                     </div>
                 </div>
             </header>
 
             <div class="page-content">
-                <a href="rooms.html" class="btn btn-outline" style="margin-bottom:1rem;"><i data-lucide="arrow-left"></i> Back to Rooms</a>
-                
+                <a href="rooms.html" class="btn btn-outline" style="margin-bottom:1rem;"><i
+                        data-lucide="arrow-left"></i> Back to Rooms</a>
+
                 <div id="room-details-container">
                     <!-- Populated via JS -->
                 </div>
@@ -133,7 +147,8 @@
                         <span>Tax (5%):</span>
                         <span id="calc-tax">Rs 0</span>
                     </div>
-                    <div style="border-top:1px solid var(--border); padding-top:0.5rem; display:flex; justify-content:space-between; font-weight:bold; font-size:1.1rem; color:var(--primary);">
+                    <div
+                        style="border-top:1px solid var(--border); padding-top:0.5rem; display:flex; justify-content:space-between; font-weight:bold; font-size:1.1rem; color:var(--primary);">
                         <span>Total:</span>
                         <span id="calc-total">Rs 0</span>
                     </div>
@@ -151,7 +166,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const roomId = parseInt(urlParams.get('id'));
-            
+
             if (!roomId) {
                 window.location.href = 'rooms.html';
                 return;
@@ -169,7 +184,7 @@
             ['book-checkin', 'book-checkout'].forEach(id => {
                 document.getElementById(id).addEventListener('change', calculatePrice);
             });
-            
+
             document.getElementById('booking-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 submitBooking();
@@ -177,7 +192,7 @@
 
             // Theme toggle (if not in app.js)
             const themeToggle = document.getElementById('theme-toggle');
-            if(themeToggle) {
+            if (themeToggle) {
                 themeToggle.addEventListener('click', () => {
                     document.body.classList.toggle('dark-mode');
                     const isDark = document.body.classList.contains('dark-mode');
@@ -191,9 +206,9 @@
             const container = document.getElementById('room-details-container');
             const badgeClass = utils.getStatusBadgeClass(room.status);
             const user = auth.getCurrentUser();
-            
+
             let amenitiesHtml = (room.amenities || []).map(a => `<div class="amenity-item"><i data-lucide="check" style="color:var(--success); width:16px;"></i> ${a}</div>`).join('');
-            
+
             let bookBtnHtml = '';
             if (room.status === 'Available') {
                 bookBtnHtml = `<button class="btn btn-primary" style="width:100%; padding:1rem;" onclick="openBookingModal(${room.id}, ${room.price}, ${room.capacity})">Book This Room</button>`;
@@ -255,12 +270,12 @@
             document.getElementById('book-room-id').value = roomId;
             document.getElementById('book-room-price').value = price;
             document.getElementById('book-guests').max = capacity;
-            
+
             // Set min date to today
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('book-checkin').min = today;
             document.getElementById('book-checkout').min = today;
-            
+
             document.getElementById('booking-form').reset();
             calculatePrice();
         }
@@ -273,7 +288,7 @@
             const checkin = document.getElementById('book-checkin').value;
             const checkout = document.getElementById('book-checkout').value;
             const price = parseFloat(document.getElementById('book-room-price').value);
-            
+
             let nights = 0;
             let subtotal = 0;
             let tax = 0;
@@ -304,7 +319,7 @@
             const checkin = document.getElementById('book-checkin').value;
             const checkout = document.getElementById('book-checkout').value;
             const guests = parseInt(document.getElementById('book-guests').value);
-            
+
             if (new Date(checkout) <= new Date(checkin)) {
                 utils.showToast('Invalid dates selected', 'error');
                 return;
@@ -361,17 +376,14 @@
 
             utils.showToast('Booking successful!', 'success');
             closeBookingModal();
-            
+
             setTimeout(() => {
                 window.location.href = currentUser.role === 'Guest' ? 'my-bookings.html' : 'bookings.html';
             }, 1500);
         }
     </script>
-    
-<script type="text/javascript">
-    aclib.runAutoTag({
-        zoneId: 'emzmigl58g',
-    });
-</script>
+
+
 </body>
+
 </html>
